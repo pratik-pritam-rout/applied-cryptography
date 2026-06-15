@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+// GCD
+long long gcd(long long a, long long b) {
+    while (b != 0) {
+        long long t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+// LCM
+long long lcm(long long a, long long b) {
+    return (a * b) / gcd(a, b);
+}
+
+// Fast modular exponentiation
+long long modExp(long long base, long long exp, long long mod) {
+    long long result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp % 2 == 1)
+            result = (result * base) % mod;
+        base = (base * base) % mod;
+        exp /= 2;
+    }
+    return result;
+}
+
+// L function
+long long L(long long x, long long n) {
+    return (x - 1) / n;
+}
+
+// Modular inverse (brute force for simplicity)
+long long modInverse(long long a, long long n) {
+    for (long long i = 1; i < n; i++) {
+        if ((a * i) % n == 1)
+            return i;
+    }
+    return -1;
+}
+
+int main() {
+    // Step 1: Key Generation
+    long long p = 3, q = 5;
+    long long n = p * q;
+    long long n2 = n * n;
+    long long lambda = lcm(p - 1, q - 1);
+    long long g = n + 1;
+
+    long long x = modExp(g, lambda, n2);
+    long long mu = modInverse(L(x, n), n);
+
+    cout << "Public Key (n, g): " << n << ", " << g << endl;
+    cout << "Private Key (lambda, mu): " << lambda << ", " << mu << endl;
+
+    // Step 2: Encryption
+    long long m = 7;
+    long long r = 2;
+
+    long long c = (modExp(g, m, n2) * modExp(r, n, n2)) % n2;
+    cout << "Encrypted: " << c << endl;
+
+    // Step 3: Decryption
+    long long u = modExp(c, lambda, n2);
+    long long Lval = L(u, n);
+    long long decrypted = (Lval * mu) % n;
+
+    cout << "Decrypted: " << decrypted << endl;
+
+    return 0;
+}

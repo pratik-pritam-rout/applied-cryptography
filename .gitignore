@@ -1,0 +1,43 @@
+# Executables
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+*.a
+*.lib
+
+# Shared libraries
+*.so
+*.dll
+*.dylib
+
+# Debug files
+*.pdb
+
+# VS Code
+.vscode/
+
+# Code Runner temporary files
+tempCodeRunnerFile.*
+
+# Build directories
+build/
+bin/
+Debug/
+Release/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
